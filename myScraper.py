@@ -5,6 +5,7 @@ This module uses BeautifulSoup 4 and Requests package to scrape Twitter for data
 @date Nov 6, 2015
 """
 
+import re
 import requests
 from bs4 import BeautifulSoup
 import webbrowser
@@ -16,7 +17,7 @@ def getTweets(usrUrl):
     tweets = soup.find_all('div', {'class': 'tweet'})
     for tweet in tweets:
         permalink = tweet.find_all('p', {'class':'tweet-text'})
-        print permalink
+        print re.sub('<.*?>', '',str(permalink))[1:-1]
         print "================================================================================================"
     print len(tweets)
 
