@@ -20,15 +20,19 @@ def getTweets(usrUrl):
     for tweetTree in tweetStream:
         try:
             tweetPTags = tweetTree.div.find('div', {'class':'content'}).find_all('p')
+            tweets = []
             for tag in tweetPTags:
-                print tag.text
-            print "================================================================================================"
+                tweets.append(tag.text)
         except:
             pass
+    return tweets
 
 usrNm = raw_input('Provide your username: @')
 #pdb.set_trace()
 usrUrl = 'https://twitter.com/' + usrNm.lower()
 followersUrl = usrUrl + '/followers'
-getTweets(usrUrl)
-#webbrowser.open(usrUrl)
+usrTweets = getTweets(usrUrl)
+for tweet in usrTweets:
+    print tweet
+    print '\n'
+
