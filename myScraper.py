@@ -5,7 +5,6 @@ This module uses BeautifulSoup 4 and Requests package to scrape Twitter for data
 @date Nov 6, 2015
 """
 
-#import pdb
 import re
 import requests
 from bs4 import BeautifulSoup
@@ -16,19 +15,20 @@ def getTweets(usrUrl):
     r = requests.get(usrUrl)
     soup = BeautifulSoup(r.content)
     tweetStream = soup.find_all('ol', {'id': 'stream-items-id'})[0].find_all('li', {'data-item-type': 'tweet'})
-    #print len(tweetStream)
     for tweetTree in tweetStream:
         try:
             tweetPTags = tweetTree.div.find('div', {'class':'content'}).find_all('p')
+            tweets = []
             for tag in tweetPTags:
-                print tag.text
-            print "================================================================================================"
+                tweets.append(tag.text)
         except:
             pass
+    return tweets
 
 usrNm = raw_input('Provide your username: @')
-#pdb.set_trace()
 usrUrl = 'https://twitter.com/' + usrNm.lower()
 followersUrl = usrUrl + '/followers'
-getTweets(usrUrl)
-#webbrowser.open(usrUrl)
+usrTweets = getTweets(usrUrl)
+for tweet in UsrTweets:
+    print tweet
+    print '\n'
